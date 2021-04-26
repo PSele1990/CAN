@@ -6,8 +6,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.Test;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 
-import javafx.scene.text.Text;
+
 
 public class SearchTestClass {
 
@@ -16,28 +19,24 @@ public class SearchTestClass {
 
 	static
 	{
-		System.setProperty("webdriver.chrome.driver","./driver/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+"/src/config/chromedriver.exe");
 		
 	}
-	@Before
+	@BeforeMethod
 	public void Openapp()
 	{
 		driver=new ChromeDriver();
 		driver.get(URL);
 	}
 	
-	@After
-	public void closeApp()
-	{
-		driver.quit();
-	}
+	
 
 	@Test
 	
 	public void test_MainScreen()
 	{
 		driver.findElement(By.xpath("//div[@id='search-form']/div/input")).sendKeys("ABC");
-		WebElement SearcHResult = driver.findElement(By.xpath("//div[@id='search-form']/div//div[text()='Provide some query']"));
+	 driver.findElement(By.xpath("//div[@id='search-form']/div//div[text()='Provide some query']"));
 		String typetext = driver.findElement(By.xpath("//div[@id='search-form']/div/input")).getAttribute("type");
 			
 			if(typetext.equals("text")) {
@@ -94,7 +93,7 @@ public class SearchTestClass {
 	for(WebElement we : Searchresult)
 	{
 		String name= we.getText();
-		System.out.println(we);
+		System.out.println(name);
 	}
 	
 	for(int i=1;i<=size;i++)
@@ -152,10 +151,15 @@ String str = SearcHResult.getText();
 			for(WebElement we : Searchresult)
 			{
 				String name= we.getText();
-				System.out.println(we);
+				System.out.println(name);
 			}
 		}
 		else
 			System.out.println(" Search  size is more than 1");
 		}
+	@AfterMethod
+	public void closeApp()
+	{
+		driver.quit();
+	}
 }
